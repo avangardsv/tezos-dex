@@ -1,461 +1,453 @@
-# Tezos DEX - Development Roadmap
+# Blockchain Boilerplate - Development Roadmap
 
-## Project Status
+## Project Evolution
 
-**Current State:** Frontend prototype only
-- ✅ Next.js UI with Chakra UI
-- ✅ Temple Wallet integration
-- ✅ Taquito library configured
-- ❌ No smart contracts
-- ❌ Outdated testnet (Edo2net → needs Ghostnet migration)
-- ❌ No backend/deployment infrastructure
-
-**Goal:** Build a functional decentralized exchange on Tezos
+**Original:** Tezos DEX (Frontend only)
+**Previous:** Tezos Baker (Infrastructure learning) ✅ Complete
+**Current:** Blockchain Boilerplate (Multi-chain learning)
+**Next:** Ethereum Smart Contract Development
 
 ---
 
-## Infrastructure Available
+## Strategic Decision: Ethereum Focus
 
-✅ **Local Baker Running:**
-- Network: Ghostnet testnet
-- RPC: http://localhost:8732
-- Node synced and operational
-- Perfect for contract deployment and testing
+### Why Pivot from Tezos to Ethereum?
+
+| Factor | Tezos | Ethereum | Winner |
+|--------|-------|----------|--------|
+| **Developer jobs** | Limited | Abundant | 🏆 Ethereum |
+| **DeFi TVL** | ~$50M | ~$50B | 🏆 Ethereum |
+| **Learning resources** | Moderate | Extensive | 🏆 Ethereum |
+| **Tooling maturity** | Good | Excellent | 🏆 Ethereum |
+| **Language demand** | SmartPy/LIGO | Solidity | 🏆 Ethereum |
+| **Ecosystem growth** | Stable | Growing | 🏆 Ethereum |
+| **Entry barrier** | Lower | Moderate | Tezos |
+
+**Conclusion:** Ethereum skills have higher market value and more opportunities.
+
+### What We Keep from Tezos
+
+✅ **Infrastructure skills** (Docker, monitoring, automation)
+✅ **Blockchain concepts** (consensus, staking, transactions)
+✅ **Frontend patterns** (wallet integration, state management)
+✅ **Monitoring stack** (Prometheus, Grafana, Loki)
+✅ **Documentation approach** (comprehensive, practical)
 
 ---
 
 ## Development Phases
 
-### **Phase 0: Foundation (Current)** ⚠️
+### **Phase 0: Foundation** ✅ Complete
 
-**Status:** Needs migration and updates
+**What was done (tezos-baker project):**
+- ✅ Deployed full Tezos node on Ghostnet
+- ✅ Operated baker with 12,000+ ꜩ staked
+- ✅ Set up DAL attestation
+- ✅ Built monitoring stack (8 containers)
+- ✅ Created 46 automation scripts
+- ✅ Wrote comprehensive documentation
+
+**Skills acquired:**
+- Docker orchestration
+- Blockchain node operation
+- Proof of Stake mechanics
+- Monitoring and observability
+- Bash/npm automation
+
+**Deliverable:** [tezos-baker repository](https://github.com/avangardsv/tezos-baker)
+
+---
+
+### **Phase 1: Solidity Fundamentals** 🎯 Current
+
+**Goal:** Learn Ethereum smart contract development basics
+
+**Duration:** 2-3 weeks
+
+#### Week 1: Environment Setup
+```
+Day 1-2: Install Hardhat, configure project
+Day 3-4: Learn Solidity syntax basics
+Day 5-7: Deploy first contract to local network
+```
 
 **Tasks:**
-- [x] Basic frontend structure
-- [ ] Migrate Edo2net → Ghostnet
-- [ ] Update dependencies (Next.js 11 → 15+)
-- [ ] Update Taquito to latest version
-- [ ] Point RPC to local baker
-- [ ] Set up development workflow
+- [ ] Install Node.js 18+ (already have)
+- [ ] Set up Hardhat project
+- [ ] Configure Sepolia testnet
+- [ ] Get Sepolia ETH from faucet
+- [ ] Deploy "Hello World" contract
 
-**Duration:** 1-2 days
+**First contract:**
+```solidity
+// contracts/HelloWorld.sol
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
 
-**Deliverable:** Updated development environment
+contract HelloWorld {
+    string public message;
+
+    constructor(string memory _message) {
+        message = _message;
+    }
+
+    function setMessage(string memory _message) public {
+        message = _message;
+    }
+}
+```
+
+#### Week 2: Core Concepts
+```
+Day 1-2: State variables, functions, modifiers
+Day 3-4: Events, errors, inheritance
+Day 5-7: Testing with Hardhat
+```
+
+**Tasks:**
+- [ ] Learn storage vs memory vs calldata
+- [ ] Understand gas optimization basics
+- [ ] Write unit tests for HelloWorld
+- [ ] Learn about common vulnerabilities
+
+#### Week 3: Token Standards
+```
+Day 1-3: ERC-20 token implementation
+Day 4-5: Deploy custom token
+Day 6-7: Frontend integration with ethers.js
+```
+
+**Tasks:**
+- [ ] Study ERC-20 standard
+- [ ] Implement simple token
+- [ ] Deploy to Sepolia
+- [ ] Create mint/transfer UI
+
+**Milestone 1 Success Criteria:**
+- ✅ Can write, test, deploy Solidity contracts
+- ✅ Understand gas and optimization
+- ✅ Have working ERC-20 token on testnet
 
 ---
 
-### **Phase 1: Smart Contract Fundamentals** 🎓
+### **Phase 2: DeFi Primitives**
 
-**Goal:** Learn contract development before building DEX
-
-**Learning Path:**
-
-#### 1.1 Hello World Contract (Week 1)
-```
-- Learn SmartPy or LIGO
-- Write simple storage contract
-- Deploy to local baker
-- Interact via Taquito
-```
-
-#### 1.2 FA2 Token Contract (Week 2-3)
-```
-- Implement FA2 standard
-- Create test token (DEX_TOKEN)
-- Deploy to Ghostnet via local baker
-- Build simple UI to mint/transfer
-```
-
-#### 1.3 Basic Escrow (Week 4)
-```
-- Learn contract-to-contract calls
-- Implement time-locked escrow
-- Test edge cases
-- Connect to frontend
-```
+**Goal:** Build fundamental DeFi components
 
 **Duration:** 4 weeks
 
-**Deliverable:**
-- 3 working contracts
-- Understanding of contract development
-- Testing framework set up
-
----
-
-### **Phase 2: Simple Token Swap** 🔄
-
-**Goal:** Build simplified DEX (2-token swap, no AMM)
-
-#### 2.1 Fixed-Price Swap Contract (Week 5-6)
+#### Week 4-5: Token Vault
 ```
-Contract Features:
-- Two tokens only (e.g., DEX_TOKEN ↔ tzBTC)
+Build: Simple staking vault
+Features:
+- Deposit ERC-20 tokens
+- Withdraw with time lock
+- Track user balances
+- Emit events for UI
+```
+
+**Contract structure:**
+```solidity
+// contracts/Vault.sol
+contract Vault {
+    IERC20 public token;
+    mapping(address => uint256) public balances;
+
+    function deposit(uint256 amount) external;
+    function withdraw(uint256 amount) external;
+    function getBalance(address user) external view returns (uint256);
+}
+```
+
+#### Week 6-7: Simple Swap
+```
+Build: Fixed-price token swap
+Features:
+- Swap Token A for Token B
 - Fixed exchange rate
-- Basic swap function
-- Withdraw liquidity (admin only)
-
-Testing:
-- Unit tests with SmartPy/LIGO test framework
-- Deploy to local baker
-- Test via Taquito
+- Basic slippage protection
+- Admin rate adjustment
 ```
 
-#### 2.2 Frontend Integration (Week 7)
-```
-UI Features:
-- Connect wallet (Temple)
-- Display token balances
-- Swap interface
-- Transaction history
+**Contract structure:**
+```solidity
+// contracts/SimpleSwap.sol
+contract SimpleSwap {
+    IERC20 public tokenA;
+    IERC20 public tokenB;
+    uint256 public rate;
 
-Pages:
-- /swap - Main swap interface
-- /tokens - Token list
-- /account - User dashboard
-```
-
-#### 2.3 Testing & Polish (Week 8)
-```
-- End-to-end testing
-- Error handling
-- Loading states
-- Transaction confirmation UX
+    function swap(uint256 amountIn, uint256 minAmountOut) external;
+    function setRate(uint256 newRate) external onlyOwner;
+}
 ```
 
-**Duration:** 4 weeks
-
-**Deliverable:** Working 2-token swap dApp on Ghostnet
-
----
-
-### **Phase 3: AMM Implementation** 💧
-
-**Goal:** Implement Automated Market Maker (Uniswap v2 style)
-
-#### 3.1 Constant Product Formula (Week 9-10)
-```
-Math Implementation:
-- x * y = k formula
-- Price calculation
-- Slippage protection
-- Fee mechanism (0.3%)
-
-Contract:
-- Liquidity pool storage
-- Swap function with price impact
-- Add/remove liquidity
-```
-
-#### 3.2 Multi-Pool Support (Week 11)
-```
-- Pool factory contract
-- Create new pairs
-- Pool discovery
-- Liquidity tracking
-```
-
-#### 3.3 Advanced Features (Week 12)
-```
-- Price oracle integration
-- Flash swap support
-- Router contract (multi-hop swaps)
-```
-
-**Duration:** 4 weeks
-
-**Deliverable:** Full AMM DEX with liquidity pools
-
----
-
-### **Phase 4: Production Features** 🚀
-
-**Goal:** Production-ready DEX
-
-#### 4.1 Security (Week 13-14)
-```
-- Smart contract audit
-- Reentrancy protection
-- Integer overflow checks
-- Access control review
-- Testnet security testing
-```
-
-#### 4.2 Advanced UI (Week 15)
-```
-- Pool analytics dashboard
-- Charts (price, volume, TVL)
-- Liquidity provider stats
-- Transaction history
-- Mobile responsive design
-```
-
-#### 4.3 Optimization (Week 16)
-```
-- Gas optimization
-- Frontend performance
-- Caching strategies
-- Error handling
-- User notifications
-```
-
-**Duration:** 4 weeks
-
-**Deliverable:** Production-ready DEX on testnet
-
----
-
-### **Phase 5: Mainnet Deployment** 💰
-
-**Decision Point:** Evaluate economics before proceeding
-
-#### 5.1 Economic Viability Check
-```
-Analyze:
-- Development costs (time investment)
-- Deployment costs (gas fees)
-- Maintenance costs (hosting, monitoring)
-- Competition (existing Tezos DEXs)
-- Potential revenue (trading fees)
-- Liquidity requirements
-```
-
-#### 5.2 Mainnet Migration (If Viable)
-```
-- Deploy contracts to mainnet
-- Add liquidity
-- Marketing & user acquisition
-- Monitoring & maintenance
-```
-
-**Duration:** Variable
-
-**Deliverable:** Live DEX on mainnet OR decision to pivot
-
----
-
-## Alternative Paths
-
-### **Path A: Educational Focus** 🎓
-```
-Stop at Phase 3
-- Publish as open-source learning project
-- Write tutorials
-- Create educational content
-- Build portfolio
-- Move to next project
-```
-
-### **Path B: Enterprise Integration** 🏢
-```
-Pivot after Phase 2
-- Build custom swap solution for client
-- White-label DEX service
-- Consulting/contract development
-- Use skills for employment
-```
-
-### **Path C: Different Protocol** 🔄
-```
-After Phase 1
-- Apply contract knowledge to higher-yield blockchain
-- Evaluate Ethereum L2s, Cosmos, etc.
-- Reuse architectural knowledge
-```
-
----
-
-## Technical Stack
-
-### **Smart Contracts**
-- **Language:** SmartPy (Python-like) OR LIGO (OCaml-like)
-- **Testing:** SmartPy test framework / LIGO test framework
-- **Deployment:** Taquito + local baker RPC
-- **Standards:** FA2 (tokens), TZIP-12
-
-### **Frontend**
-- **Framework:** Next.js 15+
-- **UI Library:** Chakra UI
-- **State:** React Context + Constate
-- **Wallet:** Temple Wallet (@temple-wallet/dapp)
-- **Blockchain:** Taquito (@taquito/taquito)
-- **Styling:** Emotion + CSS
-
-### **Infrastructure**
-- **Local Node:** Existing Ghostnet baker (localhost:8732)
-- **Testnet:** Ghostnet
-- **Monitoring:** Existing Grafana/Prometheus stack
-- **Hosting:** Vercel (frontend) + Tezos network (contracts)
-
----
-
-## Milestones & Checkpoints
-
-### **Milestone 1: Contract Competency** (End of Phase 1)
-**Success Criteria:**
-- ✅ Deployed 3+ contracts to testnet
-- ✅ Can write, test, deploy contracts independently
-- ✅ Understand contract interaction patterns
+**Milestone 2 Success Criteria:**
+- ✅ Working vault contract
+- ✅ Working swap contract
+- ✅ Both deployed to testnet
 - ✅ Frontend can interact with contracts
 
-**Decision:** Continue to Phase 2 or pivot to different contract use case?
+---
+
+### **Phase 3: AMM Development**
+
+**Goal:** Build Uniswap-style automated market maker
+
+**Duration:** 4-6 weeks
+
+#### Week 8-9: Liquidity Pool
+```
+Build: Constant product AMM pool
+Math: x * y = k
+Features:
+- Add/remove liquidity
+- LP token minting
+- Price calculation
+- Fee collection (0.3%)
+```
+
+#### Week 10-11: Router Contract
+```
+Build: Swap router
+Features:
+- Multi-hop swaps
+- Optimal path finding
+- Deadline protection
+- Slippage protection
+```
+
+#### Week 12-13: Factory Contract
+```
+Build: Pool factory
+Features:
+- Create new pairs
+- Pair registry
+- Fee configuration
+- Access control
+```
+
+**Milestone 3 Success Criteria:**
+- ✅ Full AMM with multiple pools
+- ✅ Liquidity provision working
+- ✅ Swaps executing correctly
+- ✅ Frontend DEX interface
 
 ---
 
-### **Milestone 2: Working Product** (End of Phase 2)
-**Success Criteria:**
-- ✅ Users can swap tokens
-- ✅ Transactions confirm successfully
-- ✅ UI is functional and intuitive
-- ✅ No critical bugs
+### **Phase 4: Production Polish**
 
-**Decision:** Continue to AMM or publish as simple swap tool?
+**Goal:** Security and optimization
 
----
+**Duration:** 3-4 weeks
 
-### **Milestone 3: Feature Complete** (End of Phase 3)
-**Success Criteria:**
-- ✅ Full AMM functionality
-- ✅ Multiple trading pairs
-- ✅ Liquidity providers can add/remove
-- ✅ Price discovery works
+#### Security
+- [ ] Reentrancy guards
+- [ ] Access control (OpenZeppelin)
+- [ ] Integer overflow protection
+- [ ] Flash loan attack prevention
+- [ ] Slippage protection
+- [ ] Code review and audit prep
 
-**Decision:** Go to production or treat as learning project?
+#### Optimization
+- [ ] Gas optimization
+- [ ] Storage packing
+- [ ] View function efficiency
+- [ ] Batch operations
 
----
+#### Testing
+- [ ] Unit tests (>90% coverage)
+- [ ] Integration tests
+- [ ] Fuzz testing
+- [ ] Mainnet fork testing
 
-### **Milestone 4: Production Ready** (End of Phase 4)
-**Success Criteria:**
-- ✅ Security audit passed
+**Milestone 4 Success Criteria:**
 - ✅ No known vulnerabilities
-- ✅ Comprehensive testing
-- ✅ Monitoring in place
-
-**Decision:** Deploy to mainnet or archive project?
-
----
-
-## Resources
-
-### **Learning Resources**
-- [SmartPy Documentation](https://smartpy.io/docs/)
-- [LIGO Documentation](https://ligolang.org/docs/intro/introduction)
-- [Taquito Docs](https://tezostaquito.io/)
-- [OpenTezos Smart Contracts](https://opentezos.com/smart-contracts/)
-- [Tezos Developer Portal](https://tezos.com/developers/)
-
-### **Reference Implementations**
-- [Quipuswap](https://github.com/madfish-solutions/quipuswap-core-v2) - Leading Tezos DEX
-- [Plenty DeFi](https://github.com/Plenty-network) - Multi-feature DeFi
-- [FA2 Standard](https://gitlab.com/tezos/tzip/-/blob/master/proposals/tzip-12/tzip-12.md)
-
-### **Tools**
-- [Better Call Dev](https://better-call.dev/) - Contract explorer
-- [SmartPy IDE](https://smartpy.io/ide) - Online editor
-- [TzKT](https://ghostnet.tzkt.io/) - Block explorer
-- Local Baker: http://localhost:8732
+- ✅ Gas optimized
+- ✅ Comprehensive test suite
+- ✅ Documentation complete
 
 ---
 
-## Risk Assessment
+### **Phase 5: Deployment Decision**
 
-### **Technical Risks**
-- **Contract Bugs:** High impact (loss of funds)
-  - Mitigation: Extensive testing, audit
-- **Frontend Security:** Medium (wallet connection)
-  - Mitigation: Use established libraries
-- **Scalability:** Low (Tezos handles volume)
+**Decision Point:** Mainnet or pivot?
 
-### **Economic Risks**
-- **Low Liquidity:** High (DEX needs liquidity)
-  - Mitigation: Start on testnet, evaluate
-- **Competition:** High (Quipuswap, Plenty exist)
-  - Mitigation: Educational focus or niche features
-- **Development Time:** Medium (16+ weeks)
-  - Mitigation: Modular approach, early exits
+#### Option A: Deploy to Mainnet
+**Requirements:**
+- Security audit (~$5,000-50,000)
+- Initial liquidity (~$10,000+)
+- Marketing budget
+- Ongoing maintenance
 
-### **Strategic Risks**
-- **Changing Goals:** Medium (may pivot)
-  - Mitigation: Clear milestones, reassess at checkpoints
-- **Market Conditions:** Medium (bear market = low usage)
-  - Mitigation: Focus on learning, not revenue
+**Viability check:**
+- [ ] Audit passed?
+- [ ] Liquidity secured?
+- [ ] Competitive advantage?
+- [ ] Revenue model clear?
+
+#### Option B: Portfolio Project
+**Value:**
+- Demonstrate skills
+- Open source contribution
+- Interview talking point
+- Foundation for next project
+
+#### Option C: Pivot to New Project
+**Options:**
+- NFT marketplace
+- Lending protocol
+- Yield aggregator
+- Cross-chain bridge
+- Different blockchain
 
 ---
 
-## Success Metrics
+## Technology Stack
 
-### **Learning Success** (Primary Goal)
-- ✅ Can write and deploy smart contracts
-- ✅ Understand AMM mechanics
-- ✅ Full-stack blockchain development experience
-- ✅ Portfolio-worthy project
+### **Smart Contracts**
+```
+Language:       Solidity 0.8.x
+Framework:      Hardhat / Foundry
+Testing:        Hardhat + Chai / Forge
+Libraries:      OpenZeppelin
+Standards:      ERC-20, ERC-721
+```
 
-### **Product Success** (Secondary)
-- ⚠️ 10+ users on testnet (validation)
-- ⚠️ $10K+ TVL if deployed to mainnet (economic viability)
-- ⚠️ Zero critical security incidents
+### **Frontend**
+```
+Framework:      Next.js 14+
+Language:       TypeScript
+Styling:        Chakra UI / Tailwind
+State:          Wagmi + TanStack Query
+Wallet:         RainbowKit / ConnectKit
+```
 
-### **Career Success** (Tertiary)
-- ✅ Open source contribution
-- ✅ Demonstrated blockchain expertise
-- ✅ Potential consulting opportunities
-- ✅ Employment in Web3
+### **Blockchain**
+```
+Mainnet:        Ethereum (if deployed)
+Testnet:        Sepolia / Holesky
+Node:           Alchemy / Infura (RPC)
+Explorer:       Etherscan
+```
+
+### **Infrastructure** (reused from tezos-baker)
+```
+Containers:     Docker
+Monitoring:     Prometheus + Grafana
+Logging:        Loki + Promtail
+CI/CD:          GitHub Actions
+```
 
 ---
 
 ## Timeline Summary
 
-**Realistic Timeline:**
-- Phase 0: 1-2 days
-- Phase 1: 4 weeks (contract fundamentals)
-- Phase 2: 4 weeks (simple swap)
-- Phase 3: 4 weeks (full AMM)
-- Phase 4: 4 weeks (production polish)
+**Realistic Timeline (part-time ~10h/week):**
 
-**Total: ~3.5 months of focused development**
+| Phase | Duration | Cumulative |
+|-------|----------|------------|
+| Phase 1: Solidity Basics | 3 weeks | 3 weeks |
+| Phase 2: DeFi Primitives | 4 weeks | 7 weeks |
+| Phase 3: AMM Development | 6 weeks | 13 weeks |
+| Phase 4: Production Polish | 4 weeks | 17 weeks |
+| Phase 5: Decision | 1 week | 18 weeks |
 
-**Part-time (10h/week):** 6-9 months
+**Total: ~4-5 months part-time**
+
+**Full-time (~40h/week):** ~2 months
 
 ---
 
-## Decision Framework
+## Risk Assessment
 
-**Continue to next phase IF:**
-- ✅ Enjoying the work
-- ✅ Learning valuable skills
-- ✅ Previous phase successful
-- ✅ Clear use case or goal
+### Technical Risks
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| Smart contract bugs | High | Testing, audits, OpenZeppelin |
+| Gas costs too high | Medium | Optimization, L2 consideration |
+| Tooling changes | Low | Use stable versions |
 
-**Pivot or stop IF:**
-- ❌ Not enjoying contract development
-- ❌ Better opportunities elsewhere
-- ❌ Economics don't make sense
-- ❌ Time investment too high
+### Strategic Risks
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| Market conditions | Medium | Focus on learning, not profit |
+| Burnout | Medium | Clear milestones, breaks |
+| Scope creep | Medium | Stick to roadmap phases |
+
+### Economic Risks
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| Audit costs | High | Start with testnet only |
+| Liquidity needs | High | Portfolio project OK |
+| Competition | Medium | Focus on learning value |
+
+---
+
+## Success Metrics
+
+### Learning Success (Primary)
+- ✅ Can write production-quality Solidity
+- ✅ Understand DeFi mechanics deeply
+- ✅ Portfolio of deployed contracts
+- ✅ Confident in blockchain development
+
+### Product Success (Secondary)
+- ⚠️ Working DEX on testnet
+- ⚠️ Users can swap tokens
+- ⚠️ No security incidents
+
+### Career Success (Tertiary)
+- ⚠️ Job opportunities in Web3
+- ⚠️ Consulting possibilities
+- ⚠️ Open source recognition
 
 ---
 
 ## Next Actions
 
-**Immediate (This Week):**
-1. [ ] Migrate to Ghostnet
-2. [ ] Update dependencies
-3. [ ] Set up SmartPy/LIGO environment
-4. [ ] Write first "Hello World" contract
-5. [ ] Deploy to local baker
+### This Week
+1. [ ] Set up Hardhat project in `contracts/` folder
+2. [ ] Install dependencies (ethers, hardhat, openzeppelin)
+3. [ ] Write and deploy HelloWorld.sol
+4. [ ] Get Sepolia ETH from faucet
+5. [ ] Verify contract on Etherscan
 
-**Short Term (This Month):**
-1. [ ] Complete Phase 1 contracts
-2. [ ] Test contract deployment workflow
-3. [ ] Build simple contract interaction UI
-
-**Medium Term (3 Months):**
-1. [ ] Reach Milestone 2 (working swap)
-2. [ ] Evaluate continuation vs pivot
-3. [ ] Make mainnet decision
+### This Month
+1. [ ] Complete Phase 1 (Solidity fundamentals)
+2. [ ] Build simple ERC-20 token
+3. [ ] Connect frontend to contract
+4. [ ] Document learnings
 
 ---
 
-**Version:** 1.0
+## Resources
+
+### Learning
+- [Solidity Documentation](https://docs.soliditylang.org/)
+- [Solidity by Example](https://solidity-by-example.org/)
+- [Hardhat Documentation](https://hardhat.org/docs)
+- [OpenZeppelin Docs](https://docs.openzeppelin.com/)
+- [Ethereum.org Developers](https://ethereum.org/developers)
+
+### Reference Projects
+- [Uniswap V2](https://github.com/Uniswap/v2-core)
+- [Uniswap V3](https://github.com/Uniswap/v3-core)
+- [OpenZeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts)
+
+### Tools
+- [Remix IDE](https://remix.ethereum.org/)
+- [Hardhat](https://hardhat.org/)
+- [Foundry](https://book.getfoundry.sh/)
+- [Tenderly](https://tenderly.co/)
+
+### Testnets & Faucets
+- [Sepolia Faucet](https://sepoliafaucet.com/)
+- [Alchemy Sepolia](https://www.alchemy.com/faucets/ethereum-sepolia)
+
+---
+
+**Version:** 2.0
 **Last Updated:** 2026-01-14
-**Status:** Planning Phase
-**Next Review:** After Phase 1 completion
+**Status:** Pivoting to Ethereum
+**Previous:** Tezos DEX → Tezos Baker → Blockchain Boilerplate

@@ -1,45 +1,47 @@
-# FA2 Defi dApp in Tezos network
+# Blockchain Boilerplate
 
-## ▶️ Live example
+Learning project for Ethereum smart contract development.
 
-You can find dApplciation using this [-> link <-](https://tezos-fa2-defi.vercel.app/) 
+## ⚠️ Educational Only
 
-## 🚀 Quick Start
+**Not for production use.** Contracts are not audited.
 
-Ensure you have:
+## What You'll Learn
 
-- [Node.js](https://nodejs.org) 12 or later installed
-- [Yarn](https://yarnpkg.com) v1 or v2 installed
+- Solidity smart contracts
+- ERC-20/ERC-721 tokens
+- DeFi primitives (swaps, vaults)
+- AMM mechanics (x * y = k)
+- Frontend integration (ethers.js)
 
-### 1) Clone the repository
+## Prerequisites
 
-```bash
-git clone https://github.com/VadimSvirdoff/tezos-fa2-defi.git && cd tezos-fa2-defi
+- Node.js 18+
+- Git
+- MetaMask wallet
+
+## Project Structure
+
+```
+blockchain-boilerplate/
+├── docs/           # Documentation
+└── README.md
 ```
 
-### 2) Install dependencies
+Structure will be built from scratch following the roadmap.
 
-```bash
-yarn
-```
+## Resources
 
-### 3) Run the dApp
+**Learning:**
+[Solidity by Example](https://solidity-by-example.org/) • [Hardhat Docs](https://hardhat.org/docs) • [OpenZeppelin](https://docs.openzeppelin.com/)
 
-```bash
-yarn dev
-```
+**Tools:**
+[Remix IDE](https://remix.ethereum.org/) • [Sepolia Faucet](https://sepoliafaucet.com/) • [Etherscan](https://etherscan.io/)
 
-### 4) Prepare your temple wallet
-- [install](https://templewallet.com/download)
-- [signup](https://www.youtube.com/watch?v=S8_tL8PfCts&ab_channel=MadFish.solutions) 
-- switch Tezos mainnet to Edo2 Testnet (left to your avatar)
+## Related
 
-### 5) Get tezos in Edo2 testnet 
-- go to [faucet](https://faucet.tzalpha.net/) and copy JSON
-- press to your avatar 
-- import account 
-- faucet file
-- insert JSON to faucet JSON
-- press submit
+- [tezos-baker](https://github.com/avangardsv/tezos-baker) - Infrastructure learning project
 
-### 6) Have a fun 😊😊😊
+---
+
+**Last Updated:** 2026-01-15
