@@ -32,11 +32,25 @@ Structure will be built from scratch following the roadmap.
 
 ## Resources
 
-**Learning:**
+**Primary:**
+[SpeedRunEthereum](https://speedrunethereum.com/) - Hands-on challenges (NFTs → DEX → ZK proofs)
+
+**Reference:**
 [Solidity by Example](https://solidity-by-example.org/) • [Hardhat Docs](https://hardhat.org/docs) • [OpenZeppelin](https://docs.openzeppelin.com/)
 
 **Tools:**
 [Remix IDE](https://remix.ethereum.org/) • [Sepolia Faucet](https://sepoliafaucet.com/) • [Etherscan](https://etherscan.io/)
+
+## Commit Guidelines
+
+Follow the tezos-baker commit style: short, imperative, plain sentence with no prefixes.
+
+Examples:
+```
+Update README
+Add learning journey docs
+Refactor roadmap sections
+```
 
 ## Related
 
